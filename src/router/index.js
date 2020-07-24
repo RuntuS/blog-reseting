@@ -42,7 +42,7 @@ const friend  = () => import("../views/Friend");
        {
           path : "*",
           redirect : to => {
-              return "/about"
+              return "/guidang"
           }
          }
 ]
