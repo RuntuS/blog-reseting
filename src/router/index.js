@@ -1,27 +1,56 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
-Vue.use(VueRouter)
+
+Vue.use(VueRouter);
+// 重写router，router新特性不允许跳转相同页面
+// const originalPush = VueRouter.prototype.push
+// VueRouter.prototype.push = function push(location) {
+//     return originalPush.call(this, location).catch(err => err)
+// }
+
+const HomeIndex = () => import("../views/HomeIndex");
+const about = () => import("../views/About");
+const guidang = () => import("../views/guidang");
+const friend  = () => import("../views/Friend");
 
   const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+        {
+          path: '/homeindex',
+          name: 'HomeIndex',
+          meta : {index : 0},
+          component: HomeIndex
+        },
+        {
+          path : "/about",
+          name : "About",
+          meta : {index : 1},
+          component : about
+        },
+        {
+          path : "/guidang",
+          name : "Guidang",
+          meta : {index : 2},
+          component : guidang
+        },
+       {
+          path : "/friends",
+          name : "Friends",
+          meta : {index : 3},
+          component : friend
+       },
+       {
+          path : "*",
+          redirect : to => {
+              return "/about"
+          }
+         }
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode : 'history'
 })
+
 
 export default router
