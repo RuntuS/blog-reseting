@@ -1,5 +1,5 @@
 <template>
-    <div class="classBox">
+    <div class="classBox" v-bind:class="'classBox' + indexSrc" v-if="display">
         <div class="image">
             <img v-bind:src="classInf.url" alt="photo">
             <div class="intro">
@@ -21,12 +21,21 @@
 <script>
     export default {
         name: "ClassificationBox",
-        props: ["classInf"],
+        props: ["classInf","indexSrc"],
         data(){
             return {
-
+                display : false
             }
-        }
+        },
+       mounted() {
+           this.display = true
+            var that = this;
+           setTimeout(() => {
+
+               const selector =  document.querySelector(".classBox"+this.indexSrc);
+               selector.classList.add("magictime","tinRightIn")
+           },this.indexSrc*200)
+       }
     }
 </script>
 

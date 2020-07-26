@@ -1,11 +1,16 @@
 <template>
     <div class="post">
-        <div class="imageBox">
-            <img alt="图片插图" src="https://lao-lan-go.oss-cn-beijing.aliyuncs.com/pixiv14.jpg">
+        <div class="imageBox" @click="turnBlog">
+            <figure class="imghvr-shutter-in-out-diag-2 imgfi">
+                <img alt="图片插图" src="https://lao-lan-go.oss-cn-beijing.aliyuncs.com/pixiv14.jpg">
+                <figcaption style="text-align: left; line-height: 30px">
+                    这是Javascript的读书笔记，里面涉及了许许多多的细节知识点，对面试有很多的帮助
+                </figcaption>
+            </figure>
         </div>
         <div class="inf-box">
             <p class="date">八月 19 ， 2020</p><!--date-->
-            <h2 class="title">关于Javascript的细节</h2><!--title-->
+            <h2 class="title" @click="turnBlog">关于Javascript的细节</h2><!--title-->
             <p class="intro">这是Javascript的读书笔记，里面涉及了许许多多的细节知识点，对面试有很多的帮助</p> <!--intro-->
         </div>
     </div>
@@ -26,7 +31,10 @@
 
         },
         methods:{
+            turnBlog(){
+                this.$router.push({path : "/blog/2312/sada"})
 
+            }
         }
     }
 </script>
@@ -39,18 +47,26 @@
     border: 1px solid rgb(200,200,200);
     display: flex;
     align-items: center;
+
 }
     .imageBox{
+        cursor: pointer;
         min-width: 500px;
         width: 50%;
         height: 110%;
         margin-left: -20px;
     }
 
-    .imageBox > img{
+    .imgfi{
         width: 100%;
         height: 100%;
     }
+
+    .imageBox >.imgfi > img{
+        width: 100%;
+        height: 100%;
+    }
+
 
     .inf-box{
         min-width: 300px;
@@ -72,5 +88,14 @@
     .date{
         font-size: 13px;
         color: rgb(140,140,140);
+    }
+
+    .title{
+        cursor: pointer;
+    }
+    .title:hover{
+        animation: tada;
+        animation-duration: 1s;
+
     }
 </style>

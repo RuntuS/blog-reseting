@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "highlight": "^0.2.4",
+    "highlight.js": "^10.1.2",
     "parallax-js": "^3.1.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",

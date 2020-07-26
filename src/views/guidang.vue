@@ -5,8 +5,8 @@
             分类
         </div>
         <div class="box">
-            <div class="classif" v-for="item in classInf">
-                <ClassificationBox v-bind:class-inf="item"></ClassificationBox>
+            <div class="classif" v-for="( item,index) in classInf">
+                <ClassificationBox v-bind:class-inf="item" v-bind:index-src="index+1"></ClassificationBox>
             </div>
         </div>
 

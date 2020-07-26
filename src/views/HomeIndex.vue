@@ -28,7 +28,6 @@
         },
         methods : {
             eject(){
-                console.log("chufale")
                 var top = $(document).scrollTop();
                 if(this.display === true){ //解除限制（true -> false）
                     $("body").css("overflow","auto");
