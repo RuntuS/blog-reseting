@@ -21,32 +21,22 @@
         components: {ClassificationBox, BackHeaders},
         data(){
             return {
-                classInf : [
-                    {
-                        title : "Nodejs",
-                        intro : "Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。 Node.js 使用了一个事件驱动、非阻塞式 I/O 的模型。",
-                        url : "http://www.niemingzhao.top/images/random/material-1.png",
-                        remains: 10
-                    },
-                    {
-                        title : "Nodejs",
-                        intro : "Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。 Node.js 使用了一个事件驱动、非阻塞式 I/O 的模型。",
-                        url : "http://www.niemingzhao.top/images/random/material-1.png",
-                        remains: 10
-                    },
-                    {
-                        title : "Nodejs",
-                        intro : "Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。 Node.js 使用了一个事件驱动、非阻塞式 I/O 的模型。",
-                        url : "http://www.niemingzhao.top/images/random/material-1.png",
-                        remains: 10
-                    },
-                    {
-                        title : "Nodejs",
-                        intro : "Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。 Node.js 使用了一个事件驱动、非阻塞式 I/O 的模型。",
-                        url : "http://www.niemingzhao.top/images/random/material-1.png",
-                        remains: 10
-                    }]
+                classInf : []
             }
+        },
+        methods:{
+            requestClassificationInf(){
+                this.$request.get("/classification")
+                    .then(res => {
+                        this.classInf = res.data.result;
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            }
+        },
+        created() {
+            this.requestClassificationInf();
         }
     }
 </script>

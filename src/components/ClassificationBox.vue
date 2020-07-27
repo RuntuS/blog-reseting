@@ -1,17 +1,17 @@
 <template>
     <div class="classBox" v-bind:class="'classBox' + indexSrc" v-if="display">
         <div class="image">
-            <img v-bind:src="classInf.url" alt="photo">
+            <img v-bind:src="classInf.imgUrl" alt="photo">
             <div class="intro">
                 {{classInf.title}}
             </div>
         </div>
         <div class="second">
             <div class="main-inf">
-                {{classInf.intro}}
+                {{classInf.titleIntro}}
             </div>
             <div class="button">
-                进入<span>[{{classInf.remains}}]</span>
+                进入<span>[{{classInf.blognum}}]</span>
             </div>
         </div>
 
@@ -31,7 +31,6 @@
            this.display = true
             var that = this;
            setTimeout(() => {
-
                const selector =  document.querySelector(".classBox"+this.indexSrc);
                selector.classList.add("magictime","tinRightIn")
            },this.indexSrc*200)

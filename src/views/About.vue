@@ -45,6 +45,7 @@
 <style scoped>
 
     .card{
+        min-height: 450px;
         display: flex;
         position: relative;
         box-shadow: 1px 1px 10px rgb(200,200,200);

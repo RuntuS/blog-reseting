@@ -2,16 +2,16 @@
     <div class="post">
         <div class="imageBox" @click="turnBlog">
             <figure class="imghvr-shutter-in-out-diag-2 imgfi">
-                <img alt="图片插图" src="https://lao-lan-go.oss-cn-beijing.aliyuncs.com/pixiv14.jpg">
+                <img alt="图片插图" :src="post.imgUrl">
                 <figcaption style="text-align: left; line-height: 30px">
-                    这是Javascript的读书笔记，里面涉及了许许多多的细节知识点，对面试有很多的帮助
+                    {{post.blogIntro}}
                 </figcaption>
             </figure>
         </div>
         <div class="inf-box">
-            <p class="date">八月 19 ， 2020</p><!--date-->
-            <h2 class="title" @click="turnBlog">关于Javascript的细节</h2><!--title-->
-            <p class="intro">这是Javascript的读书笔记，里面涉及了许许多多的细节知识点，对面试有很多的帮助</p> <!--intro-->
+            <p class="date">{{post.date}}</p><!--date-->
+            <h2 class="title" @click="turnBlog">{{post.blogName}}</h2><!--title-->
+            <p class="intro">{{post.blogIntro}}</p> <!--intro-->
         </div>
     </div>
 </template>
@@ -19,6 +19,7 @@
 <script>
     export default {
         name: "Post",
+        props : ['post'],
         data(){
             return {
                 winHeight : ""

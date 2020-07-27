@@ -4,9 +4,9 @@
         <div class="eject" @click="eject">
             <img :src="imageUrl" alt="down">
         </div>
-        <HomeHeadImage @winHeight="getHeight"></HomeHeadImage>
-        <div class="posts" v-for="item in arr">
-            <post></post>
+        <HomeHeadImage @winHeight="getHeight" :request-inf="HomeHeadImageInf"></HomeHeadImage>
+        <div class="posts" v-for="item in HomePostsInf">
+            <post :post="item"></post>
         </div>
     </div>
 </template>
@@ -23,7 +23,11 @@
                 display : false,
                 arr: [1,2,3,4],
                 winHeight : window.innerHeight,
-                imageUrl : require("@/assets/menu.svg")
+                imageUrl : require("@/assets/menu.svg"),
+                HomeHeadImageInf: {},
+                HomePostsInf : [],
+                requestPage : 1,
+                isFinished : false //用来防止懒加载时过多请求使用
             }
         },
         methods : {
@@ -41,7 +45,53 @@
             },
             getHeight(height){
                 this.winHeight = height;
+            },
+            requestCover(){
+                this.$request.get("/homeindex")
+                    .then(data => {
+                        this.HomeHeadImageInf = data.data.result.result[0]
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            },
+            requestPosts(page){
+                if(!this.isFinished)
+                {
+                    this.$request.get(`/homeindex/posts?page=${page}&pageNum=3`)
+                        .then(res => {
+                            if(page === 1)
+                            {
+                                this.HomePostsInf = res.data.result.result;
+                            }else{
+                                console.log(res.data.result.result);
+                                if(res.data.result.result.length !== 0)
+                                {
+                                    this.HomePostsInf = this.HomePostsInf.concat(res.data.result.result);
+                                }else{
+                                    this.isFinished = true;
+                                }
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                }
             }
+
+        },
+        created() {
+            this.requestCover();
+            this.requestPosts(this.requestPage || 1);
+        },
+        mounted() {
+            window.addEventListener("scroll",() => {
+                if(window.pageYOffset + window.innerHeight === document.body.scrollHeight) {
+                    console.log("到达底部")
+                    this.requestPage++;
+                    this.requestPosts(this.requestPage);
+                }
+            })
         }
     }
 </script>

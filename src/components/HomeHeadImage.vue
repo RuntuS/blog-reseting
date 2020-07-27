@@ -1,14 +1,13 @@
 <template>
     <div class="homeImage" v-bind:style="{height : winHeight + 'px' , width : winWidth + 'px'}">
         <div class="imageBox" v-bind:style="{height : winHeight*1.1 + 'px' , width : winWidth*1.1 + 'px'}" id="image">
-            <img data-depth="0.5"  src="https://lao-lan-go.oss-cn-beijing.aliyuncs.com/p26.jpg" alt="背景图片" >
+            <img data-depth="0.5"  :src="requestInf.imgUrl" alt="背景图片" >
         </div>
         <div class="background" v-bind:style="{height : winHeight + 'px' , width : winWidth + 'px'}"></div>
         <p class="name">Runtu</p>
         <div class="intro">
-            <p>八月 9 ，2020</p>  <!--时间-->
-            <h2>JavaScript高级程序设计</h2> <!--标题-->
-            <p>这是关于JavaScript的高级程序设计的笔记，里面记载了许多我们需要用的东西</p> <!--intro-->
+            <h2>{{requestInf.title}}</h2> <!--标题-->
+            <p>{{requestInf.intro}}</p> <!--intro-->
         </div>
     </div>
 </template>
@@ -17,11 +16,23 @@
     import Parallax from "parallax-js"
     export default {
         name: "HomeHeadImage",
+        props : ["requestInf"],
         data(){
             return {
                 winWidth : "",
                 winHeight : ""
             }
+        },
+        methods:{
+          initBackground(){
+              var scene = document.getElementById('image');
+              var parallaxInstance = new Parallax(scene,{
+                  limitX: 50,
+                  limitY : 50,
+                  hoverOnly: true
+              });
+          }
+
         },
         created(){
           this.winWidth = window.innerWidth;
@@ -33,14 +44,10 @@
                 that.winWidth = window.innerWidth;
                 that.winHeight = window.innerHeight;
                 this.$emit("winHeight",window.innerHeight);
-                console.log(that.winHeight)
+
             }
-            var scene = document.getElementById('image');
-            var parallaxInstance = new Parallax(scene,{
-                limitX: 50,
-                limitY : 50,
-                hoverOnly: true
-            });
+            this.initBackground();
+
             //
             //
             // console.log(parallaxInstance)
@@ -102,11 +109,14 @@
 
 
     .intro > h2{
+        font-size: 45px;
         margin-top: 10px;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
     }
 
     .intro > p{
         font-size: 14px;
+        letter-spacing: 1px;
+        line-height: 30px;
     }
 </style>
