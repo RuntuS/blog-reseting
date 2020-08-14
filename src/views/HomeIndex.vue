@@ -5,8 +5,11 @@
             <img :src="imageUrl" alt="down">
         </div>
         <HomeHeadImage @winHeight="getHeight" :request-inf="HomeHeadImageInf"></HomeHeadImage>
-        <div class="posts" v-for="item in HomePostsInf">
+        <div class="posts" v-for="item in HomePostsInf" >
             <post :post="item"></post>
+        </div>
+        <div v-if="!hasPosts" class="noData">
+            该专栏下暂时还没有文章，敬请期待。
         </div>
     </div>
 </template>
@@ -27,7 +30,9 @@
                 HomeHeadImageInf: {},
                 HomePostsInf : [],
                 requestPage : 1,
-                isFinished : false //用来防止懒加载时过多请求使用
+                isFinished : false, //用来防止懒加载时过多请求使用
+                pageParam:  "",
+                hasPosts : false
             }
         },
         methods : {
@@ -46,8 +51,8 @@
             getHeight(height){
                 this.winHeight = height;
             },
-            requestCover(){
-                this.$request.get("/homeindex")
+            requestCover(name){
+                this.$request.get(`/homeindex?name=${name}`)
                     .then(data => {
                         this.HomeHeadImageInf = data.data.result.result[0]
                     })
@@ -55,14 +60,15 @@
                         console.log(err);
                     })
             },
-            requestPosts(page){
+            requestPosts(page,name){
                 if(!this.isFinished)
                 {
-                    this.$request.get(`/homeindex/posts?page=${page}&pageNum=3`)
+                    this.$request.get(`/homeindex/posts?page=${page}&pageNum=3&name=${name}`)
                         .then(res => {
                             if(page === 1)
                             {
                                 this.HomePostsInf = res.data.result.result;
+                                if(this.HomePostsInf.length !== 0) { this.hasPosts = true;  }  // 是否有文章标识符更新
                             }else{
                                 console.log(res.data.result.result);
                                 if(res.data.result.result.length !== 0)
@@ -81,17 +87,35 @@
 
         },
         created() {
-            this.requestCover();
-            this.requestPosts(this.requestPage || 1);
+            if(this.$route.params.name === "home")
+            {
+                this.requestCover("home");
+                this.requestPosts(this.requestPage || 1,"home");
+                this.pageParam = "home";
+            }else{
+                this.requestCover(this.$route.params.name);
+                this.requestPosts(this.requestPage || 1,this.$route.params.name);
+                this.pageParam = this.$route.params.name;
+            }
+
+
+
         },
         mounted() {
             window.addEventListener("scroll",() => {
                 if(window.pageYOffset + window.innerHeight === document.body.scrollHeight) {
                     console.log("到达底部")
                     this.requestPage++;
-                    this.requestPosts(this.requestPage);
+                    this.requestPosts(this.requestPage,this.pageParam);
                 }
             })
+        },
+        watch : {
+            '$route'(to,from){
+                if(to.params.name !== from.params.name){
+                    this.$router.go(0);
+                }
+            }
         }
     }
 </script>
@@ -99,7 +123,7 @@
 <style scoped>
     .homeindex{
         position: relative;
-
+        font-family: 'PingFang SC','Hiragino Sans GB','Microsoft Yahei','WenQuanYi Micro Hei',sans-serif;
     }
 
     .eject{
@@ -136,5 +160,15 @@
 
     .posts > :last-child{
         margin-bottom: 200px;
+    }
+
+    .noData{
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        font-family: 'PingFang SC','Hiragino Sans GB','Microsoft Yahei','WenQuanYi Micro Hei',sans-serif;
+        font-size: 20px;
+        color: rgb(100,100,100);
     }
 </style>

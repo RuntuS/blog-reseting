@@ -1,7 +1,7 @@
 <template>
   <div id="app">
       <transition :name="transitionName">
-          <router-view></router-view>
+          <router-view ></router-view>
       </transition>
   </div>
 </template>
@@ -16,6 +16,7 @@
     },
      watch : {
         $route(to,from){
+
             if(to.meta.index > from.meta.index){
                 this.transitionName = "slide-left" //向左滑动
             }else {
@@ -23,6 +24,7 @@
             }
         }
      }
+
   }
 </script>
 

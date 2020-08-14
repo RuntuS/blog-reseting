@@ -10,7 +10,7 @@
             <div class="main-inf">
                 {{classInf.titleIntro}}
             </div>
-            <div class="button">
+            <div class="button" @click="turnToClassifi">
                 进入<span>[{{classInf.blognum}}]</span>
             </div>
         </div>
@@ -34,7 +34,12 @@
                const selector =  document.querySelector(".classBox"+this.indexSrc);
                selector.classList.add("magictime","tinRightIn")
            },this.indexSrc*200)
-       }
+       },
+        methods:{
+            turnToClassifi(){
+                this.$router.push(`/homeindex/${this.classInf.title}`);
+            }
+        }
     }
 </script>
 

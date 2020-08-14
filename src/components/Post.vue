@@ -9,7 +9,7 @@
             </figure>
         </div>
         <div class="inf-box">
-            <p class="date">{{post.date}}</p><!--date-->
+            <p class="date">{{newDate}}</p><!--date-->
             <h2 class="title" @click="turnBlog">{{post.blogName}}</h2><!--title-->
             <p class="intro">{{post.blogIntro}}</p> <!--intro-->
         </div>
@@ -22,19 +22,23 @@
         props : ['post'],
         data(){
             return {
-                winHeight : ""
+                winHeight : "",
+                newDate : ""
             }
         },
         created(){
           this.winHeight = window.innerHeight;
         },
         mounted(){
-
+            this.formatDate(this.post.date);
         },
         methods:{
             turnBlog(){
-                this.$router.push({path : "/blog/2312/sada"})
-
+                this.$router.push({path : `/blog/${this.post.blogId}/${this.post.blogName}?time=${this.post.date}`})
+            },
+            formatDate(time){
+                let arr = time.split("-");
+                this.newDate = `${arr[1]} 月 ${arr[2]} , ${arr[0]} `;
             }
         }
     }
