@@ -34,7 +34,7 @@ jobs:
     env: 
       SSH_PRIVATE_KEY: ${{secrets.ALIYUN}} 
       ARGS: "-rltgoDzvO --delete"
-      SOURCE: "dist/"
+      SOURCE: "/"
       REMOTE_HOST: "118.31.105.159"
       REMOTE_USER: "root"
       TARGET: "/root/newblog"
