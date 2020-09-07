@@ -3,11 +3,7 @@
 
 name: Node.js CI
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push]
 
 jobs:
   build:
@@ -32,9 +28,9 @@ jobs:
     - name: Deploy
       uses: easingthemes/ssh-deploy@v2.0.7
       env: 
-        SSH_PRIVATE_KEY: ${{secrets.ALIYUN}} 
+        SSH_PRIVATE_KEY: ${{ secrets.ALIYUN }} 
         ARGS: "-rltgoDzvO --delete"
-        SOURCE: "/"
+        SOURCE: "dist/"
         REMOTE_HOST: "118.31.105.159"
         REMOTE_USER: "root"
         TARGET: "/root/newblog"
