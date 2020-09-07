@@ -16,7 +16,7 @@
 
 <!--            </div>-->
             <div class="searchBar" >
-
+                x
             </div>
             <div class="router">
                 <div class="routerdiv Homeindex"  @click="turn('/homeindex')">首页</div>
