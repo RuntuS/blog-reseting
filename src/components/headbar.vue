@@ -21,13 +21,13 @@
             <div class="router">
                 <div class="routerdiv Homeindex"  @click="turn('/homeindex')">首页</div>
                 <div class="routerdiv guidang" @click="turn('/guidang')">归档</div>
-                <div class="routerdiv friends" @click="turn('/friend')">朋友</div>
+                <div class="routerdiv friends" @click="turn('/friends')">朋友</div>
                 <div class="routerdiv About" @click="turn('/about')">关于</div>
             </div>
             <div class="link">
-                <div class="icon github"><img src="@/assets/github.svg" alt="github"></div>
-                <div class="icon mail"><img src="@/assets/mail.svg" alt="mail"></div>
-                <div class="icon qq"><img src="@/assets/qq.svg" alt="qq"></div>
+                <div class="icon github" @click="goWeb('github')"><img src="@/assets/github.svg" alt="github"></div>
+                <div class="icon mail" @click="goWeb('mail')"><img src="@/assets/mail.svg" alt="mail"></div>
+                <div class="icon qq" @click="goWeb('qq')"><img src="@/assets/qq.svg" alt="qq"></div>
             </div>
             <div class="beian">
                 <span>© 2020 Runtus.| Designed by Laolan | <a href="http://www.beian.miit.gov.cn/">蜀ICP备 20004793号</a></span>
@@ -51,7 +51,18 @@
                 setTimeout(() => {
                     this.$router.push({path : path})
                 },1000)
+            },
+            goWeb(keyword){
+                if(keyword === 'github'){
+                    window.open("https://github.com/RuntuS");
+                }else if(keyword === 'mail'){
+
+                }else if(keyword === 'QQ'){
+
+                }
+
             }
+
         }
     }
 </script>

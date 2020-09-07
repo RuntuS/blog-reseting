@@ -59,7 +59,7 @@
 
     .image > img{
         width: 120%;
-        height: 120%;
+        height: 300%;
     }
 
     .intro{

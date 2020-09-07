@@ -1,5 +1,5 @@
 
-axios.defaults.baseURL = "http://192.168.1.3:3300";
+axios.defaults.baseURL = "http://127.0.0.1:3300";
 
 
 export default axios;

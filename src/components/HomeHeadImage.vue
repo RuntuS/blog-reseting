@@ -41,9 +41,13 @@
         mounted() {
             let that = this;
             window.onresize = () => {
-                that.winWidth = window.innerWidth;
-                that.winHeight = window.innerHeight;
-                this.$emit("winHeight",window.innerHeight);
+                if(window.innerWidth > 1100)
+                {
+                    that.winWidth = window.innerWidth;
+                    that.winHeight = window.innerHeight;
+                    this.$emit("winHeight",window.innerHeight);
+                }
+
 
             }
             this.initBackground();
@@ -62,6 +66,7 @@
     }
 
     .imageBox{
+
         margin-left: -50px;
         margin-top: -50px;
     }
@@ -71,7 +76,7 @@
         height: 100%;
     }
     
-    @media screen and (min-width: 1200px) {
+    @media screen and (min-width: 1100px) {
         .background {
             background: linear-gradient(45deg,rgba(145,152,299,0.6) 50% , rgba(255,255,255,0) 50%);
             position: absolute;
@@ -79,7 +84,7 @@
             left: -10%;
         }
     }
-    @media screen and (max-width: 1200px){
+    @media screen and (max-width: 1100px){
         .background {
             background: linear-gradient(45deg,rgba(145,152,299,0.6) 50% , rgba(255,255,255,0) 50%);
             position: absolute;
